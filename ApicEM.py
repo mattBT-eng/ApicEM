@@ -796,11 +796,11 @@ def DeleteTennant(tenant_name):
 '''
 #Create Interface Profile (selected ports)
 method: POST
-url: https://7.7.7.160/api/node/mo/uni/infra/accportprof-int-prof-1_39_40_SMan.json
+url: https://X.X.X.X/api/node/mo/uni/infra/accportprof-int-prof-1_39_40_SMan.json
 payload{"infraAccPortP":{"attributes":{"dn":"uni/infra/accportprof-int-prof-1_39_40_SManad","name":"int-prof-1_39_40_SMan","rn":"accportprof-int-prof-1_39_40_SMan","status":"created,modified"},"children":[{"infraHPortS":{"attributes":{"dn":"uni/infra/accportprof-int-prof-1_39_40_SMan/hports-2host3172-typ-range","name":"2host3172","rn":"hports-2host3172-typ-range","status":"created,modified"},"children":[{"infraPortBlk":{"attributes":{"dn":"uni/infra/accportprof-int-prof-1_39_40_SMan/hports-2host3172-typ-range/portblk-block2","fromPort":"39","toPort":"40","name":"block2","rn":"portblk-block2","status":"created,modified"},"children":[]}},{"infraRsAccBaseGrp":{"attributes":{"tDn":"uni/infra/funcprof/accportgrp-SManLEAFPolGrp","status":"created,modified"},"children":[]}}]}}]}}
 #Create Switch Profile and associate with Interface Profile
 method: POST
-url: https://7.7.7.160/api/node/mo/uni/infra/nprof-101_SMan.json
+url: https://X.X.X.X/api/node/mo/uni/infra/nprof-101_SMan.json
 payload{"infraNodeP":{"attributes":{"dn":"uni/infra/nprof-101_SMan","name":"101_SMan","rn":"nprof-101_SMan","status":"created,modified"},"children":[{"infraRsAccPortP":{"attributes":{"tDn":"uni/infra/accportprof-int-prof-1_39_40_SMan","status":"created,modified"},"children":[]}}]}}
 #print createPHY("TestS","SManVLP")
 #print attachAEP("smanAEP", "SMan")
