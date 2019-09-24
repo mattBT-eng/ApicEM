@@ -48,9 +48,9 @@ import requests
 import json
 
 #Credentials to access APIC and ip address of the APIC.
-apicIP = ""
-username = ""
-password = ""
+apicIP = "11.11.11.160"
+username = "admin"
+password = "Password1"
 
 
 ################################################################################################################################################
@@ -517,9 +517,12 @@ def AssociateStaticPort2EPG(tenant_name, apProfile, EPGname, Vlan, pod,leafpath,
 
 ################################################################################################################################################
 #Function adds Static Port association to EPG
-def AssociateVPCPort2EPG(tenant_name, apProfile, EPGname, Vlan, pod,leafpath,port):
+def AssociateVPCPort2EPG(tenant_name, apProfile, EPGname, Vlan, pod,leafpath,port, **kwargs):
+	'''kwargs mode = 'untagged' or 'trunk'
+	'''
 	url2 = "https://%s/api/node/mo/uni/tn-%s/ap-%s/epg-%s.json"%(apicIP,tenant_name, apProfile,EPGname)
-	payload = "{\"fvRsPathAtt\":{\"attributes\":{\"encap\":\"vlan-%s\",\"tDn\":\"topology/pod-%s/protpaths-%s/pathep-[%s]\",\"status\":\"created\"},\"children\":[]}}"%(Vlan, pod, leafpath, port)
+	mode = kwargs['mode'] if 'mode' in kwargs else 'trunk'
+	payload = "{\"fvRsPathAtt\":{\"attributes\":{\"mode\":\"untagged\",\"instrImedcy\":\"immediate\",\"encap\":\"vlan-%s\",\"tDn\":\"topology/pod-%s/protpaths-%s/pathep-[%s]\",\"status\":\"created\"},\"children\":[]}}"%(Vlan, pod, leafpath, port)
 	response2 = requests.request("POST", url2, data=payload, headers=headers, verify = False)
 	return json.loads(response2.text)
 ################################################################################################################################################
@@ -568,7 +571,7 @@ def createVPCPolGrp(VPCPolGrpName, AEP, **kwargs):
 		Optional keyword arguments: CDP = "", LLDP= "", LACP = ""
 		If you want to change these to different policies, then please parse in
 		the name of the policies as optional arguments. For e.g. 
-		createVPCPolGrp("myVPCPolGrp","myAEP", CDP="CDP_enable", LLDP="LLDP_enable", LACP="LACP_active")
+		createVPCPolGrp("myVPCPolGrp","myAEP", CDP="CDP_enable", LLDP="LLDP_enable", LACP="LACP_Active")
 		
 		Please note that the policies will have to be preconfigured (i.e. LLDP_enable must be a policy) for the optional
 		arguments to work. 
@@ -578,7 +581,7 @@ def createVPCPolGrp(VPCPolGrpName, AEP, **kwargs):
 	
 	LLDP = kwargs['LLDP'] if 'LLDP' in kwargs else  "default"
 	CDP = kwargs['CDP'] if 'CDP' in kwargs else 'default'
-	LACP = kwargs['LACP'] if 'LACP' in kwargs else 'default'	
+	LACP = kwargs['LACP'] if 'LACP' in kwargs else 'LACP_Active'	
 	
 	payload = "{\"infraAccBndlGrp\":{\"attributes\":{\"dn\":\"uni/infra/funcprof/accbundle-%s\",\"lagT\":\"node\",\"name\":\"%s\",\"rn\":\"accbundle-%s\",\"status\":\"created\"},\"children\":[{\"infraRsAttEntP\":{\"attributes\":{\"tDn\":\"uni/infra/attentp-%s\",\"status\":\"created,modified\"},\"children\":[]}},{\"infraRsLacpPol\":{\"attributes\":{\"tnLacpLagPolName\":\"%s\",\"status\":\"created,modified\"},\"children\":[]}},{\"infraRsCdpIfPol\":{\"attributes\":{\"tnCdpIfPolName\":\"%s\",\"status\":\"created,modified\"},\"children\":[]}},{\"infraRsLldpIfPol\":{\"attributes\":{\"tnLldpIfPolName\":\"%s\",\"status\":\"created,modified\"},\"children\":[]}}]}}"%(VPCPolGrpName,VPCPolGrpName,VPCPolGrpName,AEP,LACP,CDP,LLDP)
 	

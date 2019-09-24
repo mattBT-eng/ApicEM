@@ -1,16 +1,7 @@
 import ApicEM
 
-IntProfName = 'test'
-
-#print(ApicEM.createIntProf(IntProfName))# for IntProfName in IntProfNames])
-
-
-portname = 'PtSel_X'
-port = '22'
-AEP_name = 'AEP-testCCG'
+tenant_name = 'testCCG'
+apProfile = 'AP'
+EPGname = 'testCCG'
 VPCPolGrpName = 'PolGrp_VPC_CCGTest'
-
-#print(ApicEM.createVPCPolGrp(VPCPolGrpName, AEP_name)) #takes kwargs
-
-#print(ApicEM.AddPortSeltoIntProf(IntProfName,portname,port,VPCPolGrpName))
-print(ApicEM.addVPCPolGrptoPortSel(IntProfName,portname,port,VPCPolGrpName))
+print('adding VPC to EPG'+str(ApicEM.AssociateVPCPort2EPG(tenant_name, apProfile, EPGname, '62', '1','101-102',VPCPolGrpName, mode='untagged')))

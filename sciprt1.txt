@@ -1,0 +1,18 @@
+#Script1
+import ApicEM
+
+IntProfName = 'CCGTest_IntProf'
+SwProfName = 'CCGTest_SwProf'
+print(ApicEM.createIntProf(IntProfName))
+print(ApicEM.createSwitchProf(SwitchProfName))
+
+
+portname = 'PtSel_X'
+port = '22'
+AEP_name = 'AEP-testCCG'
+VPCPolGrpName = 'PolGrp_VPC_CCGTest'
+
+#print(ApicEM.createVPCPolGrp(VPCPolGrpName, AEP_name)) #takes kwargs
+
+#print(ApicEM.AddPortSeltoIntProf(IntProfName,portname,port,VPCPolGrpName))
+print(ApicEM.addVPCPolGrptoPortSel(IntProfName,portname,port,VPCPolGrpName))
