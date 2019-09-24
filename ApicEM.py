@@ -555,14 +555,15 @@ def attachAEP(AEP_name, Phy_name):
 ################################################################################################################################################
 #Function creates PhysicalDomain and associates with VLP. Name of VLP and Phys domain name needed for argument
 def createPHY(Phy_name, VLP_name):
-	url2 = "https://%s/api/node/mo/uni/phys-%s.json"%(apicIP,Phy_name)#, apProfile,EPGname)
+	url2 = "https://%s/api/node/mo/uni/phys-%s/.json"%(apicIP,Phy_name)#, apProfile,EPGname)
 
-	payload = "{\"physDomP\":{\"attributes\":{\"dn\":\"uni/phys-%s\",\"name\":\"%s\",\"rn\":\"phys-%s\",\"status\":\"created\"},\"children\":[{\"infraRsVlanNs\":{\"attributes\":{\"tDn\":\"uni/infra/vlanns-[%s]-dynamic\",\"status\":\"created\"},\"children\":[]}}]}}"%(Phy_name,Phy_name,Phy_name,VLP_name)
-	
+	payload = "{\"physDomP\":{\"attributes\":{\"dn\":\"uni/phys-%s\",\"name\":\"%s\",\"rn\":\"phys-%s\",\"status\":\"created\"},\"children\":[{\"infraRsVlanNs\":{\"attributes\":{\"tDn\":\"uni/infra/vlanns-[%s]-dynamic\",\"status\":\"created\"},\"children\":[]}}]}}"%(Phy_name,Phy_name,Phy_name,VLP_name)	
 	response2 = requests.request("POST", url2, data=payload, headers=headers, verify = False)
-	return json.loads(response2.text)
+	url3 = 'https://%s/api/node/mo/uni/phys-%s/rsvlanNs.json'%(apicIP,Phy_name)
+	payload2 = '{"infraRsVlanNs":{"attributes":{"tDn":"uni/infra/vlanns-[%s]-static","status":"modified"},"children":[]}}'%(VLP_name)
+	response3 = requests.request("POST", url3, data=payload2, headers=headers, verify = False)
+	return response2.text,response3.text
 ################################################################################################################################################
-
 
 
 def createVPCPolGrp(VPCPolGrpName, AEP, **kwargs):

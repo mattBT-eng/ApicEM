@@ -30,7 +30,10 @@ print('adding port to IntProf'+str(ApicEM.AddPortSeltoIntProf('CCGTest_IntProf_1
 
 VPCPolGrpName = 'PolGrp_VPC_CCGTest_1718'
 lacp_policy = 'LACP_Active' #for CCG its LACP_active
-#print(ApicEM.createVPCPolGrp(VPCPolGrpName, AEP_name,LACP = lacp_policy)) #takes kwargs
+print(ApicEM.createVPCPolGrp(VPCPolGrpName, AEP_name,LACP = lacp_policy)) #takes kwargs
 
 print(ApicEM.AddPortSeltoIntProf('CCGTest_IntProf_101','PtSel_17','17','PolGrp_VPC_CCGTest_1718'))
+print(ApicEM.AddPortSeltoIntProf('CCGTest_IntProf_102','PtSel_18','18','PolGrp_VPC_CCGTest_1718'))
+
+print(ApicEM.addVPCPolGrptoPortSel('CCGTest_IntProf_101','PtSel_17','17','PolGrp_VPC_CCGTest_1718'))
 print(ApicEM.addVPCPolGrptoPortSel('CCGTest_IntProf_102','PtSel_18','18','PolGrp_VPC_CCGTest_1718'))
