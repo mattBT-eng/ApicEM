@@ -48,9 +48,9 @@ import requests
 import json
 
 #Credentials to access APIC and ip address of the APIC.
-apicIP = "XXXX"
-username = "XXXX"
-password = "XXXX"
+apicIP = ""
+username = ""
+password = ""
 
 
 ################################################################################################################################################
@@ -630,6 +630,15 @@ def AddPortSeltoIntProf(IntProfName,PortSelectorName,Port,PolGrp):
 	url2 = "https://%s/api/node/mo/uni/infra/accportprof-%s/hports-%s-typ-range.json"%(apicIP,IntProfName, PortSelectorName)#, apProfile,EPGname)
 	
 	payload = '{"infraHPortS":{"attributes":{"dn":"uni/infra/accportprof-%s/hports-%s-typ-range","name":"%s","rn":"hports-%s-typ-range","status":"created,modified"},"children":[{"infraPortBlk":{"attributes":{"dn":"uni/infra/accportprof-%s/hports-%s-typ-range/portblk-block2","fromPort":"%s","toPort":"%s","name":"block2","rn":"portblk-block2","status":"created,modified"},"children":[]}},{"infraRsAccBaseGrp":{"attributes":{"tDn":"uni/infra/funcprof/accportgrp-%s","status":"created,modified"},"children":[]}}]}}'%(IntProfName,PortSelectorName,PortSelectorName,PortSelectorName,IntProfName,PortSelectorName,Port,Port,PolGrp)
+	
+	response2 = requests.request("POST", url2, data=payload, headers=headers, verify = False)
+	return json.loads(response2.text)
+def addVPCPolGrptoPortSel(IntProfName,PortSelectorName,Port,PolGrp):
+	'''Adds VPC Policy Group to a port selector under an Interface profile. Important for binding 2+ interfaces into VPC
+	'''
+	url2 = "https://%s/api/node/mo/uni/infra/accportprof-%s/hports-%s-typ-range/rsaccBaseGrp.json"%(apicIP,IntProfName, PortSelectorName)#, apProfile,EPGname)
+	
+	payload = '{"infraRsAccBaseGrp":{"attributes":{"tDn":"uni/infra/funcprof/accbundle-%s"},"children":[]}}'%(PolGrp)
 	
 	response2 = requests.request("POST", url2, data=payload, headers=headers, verify = False)
 	return json.loads(response2.text)
