@@ -559,11 +559,22 @@ def addVlans2VLP(VLP_name, rangeFrom, rangeTo, allocationMode):
 #Function creates and attaches AEP to specified PhysicalDomain. Name of AEP and Phys domain name needed for argument
 def attachAEP(AEP_name, Phy_name):
 	url2 = "https://%s/api/node/mo/uni/infra.json"%(apicIP)
-	payload = "{\"infraInfra\":{\"attributes\":{\"dn\":\"uni/infra\",\"status\":\"modified\"},\"children\":[{\"infraAttEntityP\":{\"attributes\":{\"dn\":\"uni/infra/attentp-%s\",\"name\":\"%s\",\"rn\":\"attentp-%s\",\"status\":\"created\"},\"children\":[{\"infraRsDomP\":{\"attributes\":{\"tDn\":\"uni/phys-%s\",\"status\":\"created\"},\"children\":[]}}]}},{\"infraFuncP\":{\"attributes\":{\"dn\":\"uni/infra/funcprof\",\"status\":\"modified\"}}}]}}"%(AEP_name,AEP_name,AEP_name,Phy_name)
+	payload = "{\"infraInfra\":{\"attributes\":{\"dn\":\"uni/infra\",\"status\":\"modified\"},\"children\":[{\"infraAttEntityP\":{\"attributes\":{\"dn\":\"uni/infra/attentp-%s\",\"name\":\"%s\",\"rn\":\"attentp-%s\",\"status\":\"modified\"},\"children\":[{\"infraRsDomP\":{\"attributes\":{\"tDn\":\"uni/phys-%s\",\"status\":\"created\"},\"children\":[]}}]}},{\"infraFuncP\":{\"attributes\":{\"dn\":\"uni/infra/funcprof\",\"status\":\"modified\"}}}]}}"%(AEP_name,AEP_name,AEP_name,Phy_name)
 	
 	response2 = requests.request("POST", url2, data=payload, headers=headers, verify = False)
 	return json.loads(response2.text)
 ################################################################################################################################################
+
+################################################################################################################################################
+#Function creates and attaches AEP to specified PhysicalDomain. Name of AEP and Phys domain name needed for argument
+def createAEP(AEP_name):
+	url2 = "https://%s/api/node/mo/uni/infra.json"%(apicIP)
+	payload = "{\"infraInfra\":{\"attributes\":{\"dn\":\"uni/infra\",\"status\":\"modified\"},\"children\":[{\"infraAttEntityP\":{\"attributes\":{\"dn\":\"uni/infra/attentp-%s\",\"name\":\"%s\",\"rn\":\"attentp-%s\",\"status\":\"created\"},\"children\":[]}},{\"infraFuncP\":{\"attributes\":{\"dn\":\"uni/infra/funcprof\",\"status\":\"modified\"}}}]}}"%(AEP_name,AEP_name,AEP_name)
+	
+	response2 = requests.request("POST", url2, data=payload, headers=headers, verify = False)
+	return json.loads(response2.text)
+################################################################################################################################################
+
 
 ################################################################################################################################################
 #Function creates PhysicalDomain and associates with VLP. Name of VLP and Phys domain name needed for argument
