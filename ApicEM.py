@@ -359,6 +359,20 @@ def GetVLP():
 	StaticPortsListJson = json.loads(response2.text)
 	return StaticPortsListJson
 ################################################################################################################################################
+###############################################################################################################################################
+#Function fetches list of static ports for given EPGs
+def GetVPC():
+	url2 = "https://%s//api/node/class/infraAccBndlGrp.json"%(apicIP)
+	response2 = requests.request("GET", url2, headers=headers, verify = False)
+	VPCListJson = json.loads(response2.text)
+	alist = []
+	for i in range(len(VPCListJson["imdata"])):
+		alist.append(VPCListJson["imdata"][i]["infraAccBndlGrp"]["attributes"]["name"])
+	return alist
+################################################################################################################################################
+
+#url: https://11.11.11.161/api/node/class/infraAccBndlGrp.json?query-target-filter=and(not(wcard(infraAccBndlGrp.dn,%22__ui_%22)),eq(infraAccBndlGrp.lagT,"node"))&subscription=yes&&page=0&page-size=40
+
 #print(GetVLP())
 
 '''
