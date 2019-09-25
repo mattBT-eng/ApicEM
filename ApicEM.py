@@ -80,8 +80,14 @@ def DeAssociateVPC(tenant_name, apProfile,EPGname,pod,leaf,VPC):
 	return json.loads(response2.text)
 ################################################################################################################################################
 
-
-
+################################################################################################################################################
+#Deassociate physical domain from EPG
+def DeassociatePHY(tenant_name,apProfile,EPGname,Phy_name):
+	url2 = "https://%s/api/node/mo/uni/tn-%s/ap-%s/epg-%s/rsdomAtt-[uni/phys-%s].json"%(apicIP,tenant_name,apProfile,EPGname,Phy_name)
+	payload = '{"fvRsDomAtt":{"attributes":{"dn":"uni/tn-%s/ap-%s/epg-%s/rsdomAtt-[uni/phys-%s]","status":"deleted"},"children":[]}}'%(tenant_name,apProfile,EPGname,Phy_name)
+	response2 = requests.request("POST", url2, data=payload, headers=headers, verify = False)
+	return json.loads(response2.text)
+################################################################################################################################################
 
 
 
