@@ -538,15 +538,22 @@ def AssociateVPCPort2EPG(tenant_name, apProfile, EPGname, Vlan, pod,leafpath,por
 
 ################################################################################################################################################
 #Function adds VLAN pool to Fabric. Arguments needed: VLP name, range from, range to, allocation mode (dynamic/static).
-def addVLP(VLP_name, rangeFrom, rangeTo, allocationMode):
+def addVLP(VLP_name,allocationMode):
 	url2 = "https://%s/api/node/mo/uni/infra/vlanns-[%s]-%s.json"%(apicIP,VLP_name, allocationMode)
 
-	payload = "{\"fvnsVlanInstP\":{\"attributes\":{\"dn\":\"uni/infra/vlanns-[%s]-%s\",\"name\":\"%s\",\"rn\":\"vlanns-[%s]-%s\",\"status\":\"created\"},\"children\":[{\"fvnsEncapBlk\":{\"attributes\":{\"dn\":\"uni/infra/vlanns-[%s]-%s/from-[vlan-%s]-to-[vlan-%s]\",\"from\":\"vlan-%s\",\"to\":\"vlan-%s\",\"allocMode\":\"%s\",\"rn\":\"from-[vlan-%s]-to-[vlan-%s]\",\"status\":\"created\"}}}]}}"%(VLP_name,allocationMode,VLP_name,VLP_name,allocationMode,VLP_name,allocationMode,rangeFrom,rangeTo,rangeFrom,rangeTo,allocationMode,rangeFrom,rangeTo)
+	payload = "{\"fvnsVlanInstP\":{\"attributes\":{\"dn\":\"uni/infra/vlanns-[%s]-%s\",\"name\":\"%s\",\"rn\":\"vlanns-[%s]-%s\",\"status\":\"created,modified\"}}}"%(VLP_name,allocationMode,VLP_name,VLP_name,allocationMode)
 	
 	response2 = requests.request("POST", url2, data=payload, headers=headers, verify = False)
 	return json.loads(response2.text)
 ################################################################################################################################################
 
+def addVlans2VLP(VLP_name, rangeFrom, rangeTo, allocationMode):
+	url2 = "https://%s/api/node/mo/uni/infra/vlanns-[%s]-%s.json"%(apicIP,VLP_name, allocationMode)
+
+	payload = "{\"fvnsVlanInstP\":{\"attributes\":{\"dn\":\"uni/infra/vlanns-[%s]-%s\",\"name\":\"%s\",\"rn\":\"vlanns-[%s]-%s\",\"status\":\"modified\"},\"children\":[{\"fvnsEncapBlk\":{\"attributes\":{\"dn\":\"uni/infra/vlanns-[%s]-%s/from-[vlan-%s]-to-[vlan-%s]\",\"from\":\"vlan-%s\",\"to\":\"vlan-%s\",\"allocMode\":\"%s\",\"rn\":\"from-[vlan-%s]-to-[vlan-%s]\",\"status\":\"created,modified\"}}}]}}"%(VLP_name,allocationMode,VLP_name,VLP_name,allocationMode,VLP_name,allocationMode,rangeFrom,rangeTo,rangeFrom,rangeTo,allocationMode,rangeFrom,rangeTo)
+	
+	response2 = requests.request("POST", url2, data=payload, headers=headers, verify = False)
+	return json.loads(response2.text)
 
 ################################################################################################################################################
 #Function creates and attaches AEP to specified PhysicalDomain. Name of AEP and Phys domain name needed for argument
