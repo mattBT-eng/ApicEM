@@ -64,7 +64,7 @@ def delLeafaccport(policy_name):
 
 ################################################################################################################################################
 #Delete PC/VPC group policy
-def delPCpol(policy_name):
+def delVPCpol(policy_name):
 	url2= "https://%s/api/node/mo/uni/infra/funcprof/accbundle-%s.json"%(apicIP,policy_name)
 	payload = '{"infraAccBndlGrp":{"attributes":{"dn":"uni/infra/funcprof/accbundle-%s","status":"deleted"},"children":[]}}'%(policy_name)
 	response2 = requests.request("POST" ,url2, data=payload,headers=headers,verify=False)
@@ -72,8 +72,18 @@ def delPCpol(policy_name):
 ################################################################################################################################################
 
 ################################################################################################################################################
+#Deassociate physical port from EPG
+def DeassociatePort(tenant_name,apProfile,EPGname,pod,leaf,port):
+	url2 = "https://%s/api/node/mo/uni/tn-%s/ap-%s/epg-%s/rspathAtt-[topology/pod-%s/paths-%s/pathep-[eth1/%s]].json"%(apicIP,tenant_name,apProfile,EPGname,pod,leaf,port)
+	payload = '{"fvRsPathAtt":{"attributes":{"dn":"uni/tn-%s/ap-%s/epg-%s/rspathAtt-[topology/pod-%s/paths-%s/pathep-[eth1/%s]]","status":"deleted"},"children":[]}}'%(tenant_name,apProfile,EPGname,pod,leaf,port)
+	response2 = requests.request("POST", url2, data=payload, headers=headers, verify = False)
+	return  json.loads(response2.text)
+################################################################################################################################################
+
+
+################################################################################################################################################
 #Function that Deassociates VPC. Requires AP, EPG,pod, leaf and VPC 
-def DeAssociateVPC(tenant_name, apProfile,EPGname,pod,leaf,VPC):
+def DeassociateVPC(tenant_name, apProfile,EPGname,pod,leaf,VPC):
 	url2 = "https://%s/api/node/mo/uni/tn-%s/ap-%s/epg-%s/rspathAtt-[topology/pod-%s/protpaths-%s/pathep-[%s]].json"%(apicIP,tenant_name,apProfile,EPGname,pod,leaf,VPC)
 	payload='{"fvRsPathAtt":{"attributes":{"dn":"uni/tn-%s/ap-%s/epg-%s/rspathAtt-[topology/pod-%s/protpaths-%s/pathep-[%s]]","status":"deleted"},"children":[]}}'%(tenant_name,apProfile,EPGname,pod,leaf,VPC)
 	response2 = requests.request("POST", url2, data=payload, headers=headers, verify = False)
