@@ -1,0 +1,33 @@
+Creating VLP CCG_PHYS_VLP{'totalCount': '0', 'imdata': []}
+adding 1621 to 1621 vlan range to VLP CCG_PHYS_VLP{'totalCount': '0', 'imdata': []}
+adding 1625 to 1625 vlan range to VLP CCG_PHYS_VLP{'totalCount': '0', 'imdata': []}
+adding 1629 to 1629 vlan range to VLP CCG_PHYS_VLP{'totalCount': '0', 'imdata': []}
+adding 4002 to 4002 vlan range to VLP CCG_PHYS_VLP{'totalCount': '0', 'imdata': []}
+adding 504 to 507 vlan range to VLP CCG_PHYS_VLP{'totalCount': '0', 'imdata': []}
+adding 1600 to 1600 vlan range to VLP CCG_PHYS_VLP{'totalCount': '0', 'imdata': []}
+adding 1617 to 1617 vlan range to VLP CCG_PHYS_VLP{'totalCount': '0', 'imdata': []}
+adding 500 to 500 vlan range to VLP CCG_PHYS_VLP{'totalCount': '0', 'imdata': []}
+adding 3601 to 3604 vlan range to VLP CCG_PHYS_VLP{'totalCount': '0', 'imdata': []}
+adding 3618 to 3618 vlan range to VLP CCG_PHYS_VLP{'totalCount': '0', 'imdata': []}
+adding 3619 to 3619 vlan range to VLP CCG_PHYS_VLP{'totalCount': '0', 'imdata': []}
+Creating VLP CCG_VMM_VLP{'totalCount': '0', 'imdata': []}
+adding 1000 to 1050 vlan range to VLP CCG_VMM_VLP{'totalCount': '0', 'imdata': []}
+adding 1051 to 1100 vlan range to VLP CCG_VMM_VLP{'totalCount': '0', 'imdata': []}
+creating physical-domain CCG_PHYS_DOM_MAN('{"totalCount":"1","imdata":[{"error":{"attributes":{"code":"103","text":"Cannot create Physical Domain (physDomP); object uni\\/phys-CCG_PHYS_DOM_MAN already exists."}}}]}', '{"totalCount":"0","imdata":[]}')
+creating physical-domain CCG_PHYS_DOM_WLV('{"totalCount":"1","imdata":[{"error":{"attributes":{"code":"103","text":"Cannot create Physical Domain (physDomP); object uni\\/phys-CCG_PHYS_DOM_WLV already exists."}}}]}', '{"totalCount":"0","imdata":[]}')
+{'totalCount': '1', 'imdata': [{'error': {'attributes': {'code': '103', 'text': 'Cannot create Attachable Access Entity Profile (infraAttEntityP); object uni/infra/attentp-CCG_AEP_PHYS already exists.'}}}]}
+attaching AEP CCG_AEP_PHYS{'totalCount': '1', 'imdata': [{'error': {'attributes': {'code': '103', 'text': 'Cannot create Domain (infraRsDomP); object uni/infra/attentp-CCG_AEP_PHYS/rsdomP-[uni/phys-CCG_PHYS_DOM_MAN] already exists.'}}}]}
+attaching AEP CCG_AEP_PHYS{'totalCount': '1', 'imdata': [{'error': {'attributes': {'code': '103', 'text': 'Cannot create Domain (infraRsDomP); object uni/infra/attentp-CCG_AEP_PHYS/rsdomP-[uni/phys-CCG_PHYS_DOM_WLV] already exists.'}}}]}
+creating Int prof, Swprof, associating bothINT_PROF_101_UKSW_PROF_101_UK{'totalCount': '0', 'imdata': []}{'totalCount': '0', 'imdata': []}{'totalCount': '0', 'imdata': []}creating Int prof, Swprof, associating bothINT_PROF_102_UKSW_PROF_102_UK{'totalCount': '0', 'imdata': []}{'totalCount': '0', 'imdata': []}{'totalCount': '0', 'imdata': []}creating Int prof, Swprof, associating bothINT_PROF_103_UKSW_PROF_103_UK{'totalCount': '0', 'imdata': []}{'totalCount': '0', 'imdata': []}{'totalCount': '0', 'imdata': []}creating Int prof, Swprof, associating bothINT_PROF_104_UKSW_PROF_104_UK{'totalCount': '0', 'imdata': []}{'totalCount': '0', 'imdata': []}{'totalCount': '0', 'imdata': []}creating PolGrp for single interfaces{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}adding port to IntProf{'totalCount': '0', 'imdata': []}
+creating VPC PolGrp{'totalCount': '0', 'imdata': []}
+adding port selector to int prof {'totalCount': '0', 'imdata': []}
+adding VPCPolGrp to port selector{'totalCount': '0', 'imdata': []}
+adding port to IntProf{'totalCount': '0', 'imdata': []}
+adding port selector to int prof {'totalCount': '0', 'imdata': []}
+adding VPCPolGrp to port selector{'totalCount': '0', 'imdata': []}
+adding port to IntProf{'totalCount': '0', 'imdata': []}
+adding port selector to int prof {'totalCount': '0', 'imdata': []}
+adding VPCPolGrp to port selector{'totalCount': '0', 'imdata': []}
+adding port to IntProf{'totalCount': '0', 'imdata': []}
+adding port selector to int prof {'totalCount': '0', 'imdata': []}
+adding VPCPolGrp to port selector{'totalCount': '0', 'imdata': []}

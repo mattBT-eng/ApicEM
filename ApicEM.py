@@ -371,7 +371,7 @@ def GetVPC():
 	return alist
 ################################################################################################################################################
 
-#url: https://11.11.11.161/api/node/class/infraAccBndlGrp.json?query-target-filter=and(not(wcard(infraAccBndlGrp.dn,%22__ui_%22)),eq(infraAccBndlGrp.lagT,"node"))&subscription=yes&&page=0&page-size=40
+
 
 #print(GetVLP())
 

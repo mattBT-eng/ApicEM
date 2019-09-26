@@ -12,7 +12,8 @@ SwProfNames = ['CCGTest_SwProf_101', 'CCGTest_SwProf_102','CCGTest_SwProf_103','
 rangeFrom = "60"
 rangeTo = "65"
 allocationMode = "static" #or dynamic
-print('creating VLP'+str(ApicEM.addVLP(VLP_name, rangeFrom, rangeTo, allocationMode)))
+print('creating VLP'+str(ApicEM.addVLP(VLP_name, allocationMode)))
+print((ApicEM.addVlans2VLP(VLP_name, rangeFrom, rangeTo, allocationMode)))
 print('creating Physical domain' +str(ApicEM.createPHY(Phy_name, VLP_name)))
 print('creating AEP'+str(ApicEM.attachAEP(AEP_name, Phy_name)))
 print('creating IntProfiles'+str([ApicEM.createIntProf(IntProfName) for IntProfName in IntProfNames]))
@@ -29,7 +30,7 @@ port = '17'
 print('adding port to IntProf'+str(ApicEM.AddPortSeltoIntProf('CCGTest_IntProf_104',portname,port,IntPolGrpName)))
 
 VPCPolGrpName = 'PolGrp_VPC_CCGTest_1718'
-lacp_policy = 'LACP_Active' #for CCG its LACP_active
+lacp_policy = 'default' #for CCG its LACP_active
 print(ApicEM.createVPCPolGrp(VPCPolGrpName, AEP_name,LACP = lacp_policy)) #takes kwargs
 
 print(ApicEM.AddPortSeltoIntProf('CCGTest_IntProf_101','PtSel_17','17','PolGrp_VPC_CCGTest_1718'))

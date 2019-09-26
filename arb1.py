@@ -1,7 +1,9 @@
 import ApicEM
+import csv
+IntProfName = 'INT_PROF_101_UK'
+IntSel = 'INT_SEL_1_13-14'
+Int = '13-14'
+PolGrp = 'INT_POL_GRP_VPC_CDP_LLDP'
 
-tenant_name = 'testCCG'
-apProfile = 'AP'
-EPGname = 'testCCG'
-VPCPolGrpName = 'PolGrp_VPC_CCGTest'
-print('adding VPC to EPG'+str(ApicEM.AssociateVPCPort2EPG(tenant_name, apProfile, EPGname, '62', '1','101-102',VPCPolGrpName, mode='untagged')))
+
+#print(ApicEM.AddPortSeltoIntProf(IntProfName,IntSel,Int,PolGrp))
