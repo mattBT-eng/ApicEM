@@ -99,7 +99,84 @@ def DeassociatePHY(tenant_name,apProfile,EPGname,Phy_name):
 	return json.loads(response2.text)
 ################################################################################################################################################
 
+################################################################################################################################################
+#Function to get SVI 
+def getSVI(tenant_name, L3out_name, NodeProf_name, LogicalInt_name):
+	url2 = 'https://{0}/api/node/mo/uni/tn-{1}/out-{2}/lnodep-{3}/lifp-{4}.json?query-target=subtree&target-subtree-class=l3extRsPathL3OutAtt&query-target-filter=not(wcard(l3extRsPathL3OutAtt.dn,%22__ui_%22))&target-subtree-class=l3extRsPathL3OutAtt,l3extIp,l3extMember'.format(apicIP,tenant_name,L3out_name,NodeProf_name,LogicalInt_name)
+	response2 = requests.request("GET", url2, headers=headers, verify = False)
+	Svilist_json= json.loads(response2.text)
+	SVI_list = ''
+	if int(Svilist_json["totalCount"]) != 2 :
+		SVI_list=[]
+		IP_sideA=[]
+		IP_sideB=[]
+		j=0
+		for i in range(int(int(Svilist_json["totalCount"])/5), int((int(Svilist_json["totalCount"])+int(int(Svilist_json["totalCount"])/5))/2)):
+			line=re.split('/',Svilist_json["imdata"][i]["l3extMember"]["attributes"]["dn"])
+			line_pod=line[6].split("pod-")[1]
+			line_protpath=line[7].split("protpaths-")[1]
+			line_vpc=line[8].split("[")[1].split("]")[0]
+			side=Svilist_json["imdata"][i]["l3extMember"]["attributes"]["side"]
+			IP_secondary = Svilist_json["imdata"][i+2*(int(int(Svilist_json["totalCount"])/5))]["l3extIp"]["attributes"]["addr"]
+			if side == 'A':
+				IP_sideA = side=Svilist_json["imdata"][i]["l3extMember"]["attributes"]["addr"]
+			elif side == 'B':
+				IP_sideB = side=Svilist_json["imdata"][i]["l3extMember"]["attributes"]["addr"]
+			if str(line_vpc) not in str(SVI_list) and int((i+(int(int(Svilist_json["totalCount"])/5)-1))%2)==0:
+				line_vlan=Svilist_json["imdata"][j]["l3extRsPathL3OutAtt"]["attributes"]["encap"].split("vlan-")[1]
+				j+=1
+				SVI_list.append([line_pod,line_protpath,line_vpc,IP_sideA,IP_sideB,IP_secondary,line_vlan])
+	return SVI_list
+################################################################################################################################################
 
+################################################################################################################################################
+def createSVI(tenant_name,L3out_name,NodeProf_name,LogicalInt_name,pod,node,vpc,vlan,IP_sideA,IP_sideB,IP_sideA_secondary,IP_sideB_secondary):
+	url2 = "https://{0}/api/node/mo/uni/tn-{1}/out-{2}/lnodep-{3}/lifp-{4}/rspathL3OutAtt-[topology/pod-{5}/protpaths-{6}/pathep-[{7}]].json".format(apicIP,tenant_name,L3out_name,NodeProf_name,LogicalInt_name,pod,node,vpc)
+	payload = '{"l3extRsPathL3OutAtt":{"attributes":{"dn":"uni/tn-%s/out-%s/lnodep-%s/lifp-%s/rspathL3OutAtt-[topology/pod-%s/protpaths-%s/pathep-[%s]]","mac":"00:22:BD:F8:19:FF","ifInstT":"ext-svi","encap":"vlan-%s","tDn":"topology/pod-%s/protpaths-%s/pathep-[%s]","rn":"rspathL3OutAtt-[topology/pod-%s/protpaths-%s/pathep-[%s]]","status":"created"},"children":[{"l3extMember":{"attributes":{"addr":"%s","status":"created","side":"A"},"children":[{"l3extIp":{"attributes":{"addr":"%s","status":"created"},"children":[]}}]}},{"l3extMember":{"attributes":{"side":"B","addr":"%s","status":"created"},"children":[{"l3extIp":{"attributes":{"addr":"%s","status":"created"},"children":[]}}]}}]}}'%(tenant_name,L3out_name,NodeProf_name,LogicalInt_name,pod,node,vpc,vlan,pod,node,vpc,pod,node,vpc,IP_sideA,IP_sideA_secondary,IP_sideB,IP_sideB_secondary)
+	response2 = requests.request("POST", url2, data=payload, headers=headers, verify = False)
+	return json.loads(response2.text)
+################################################################################################################################################
+
+################################################################################################################################################
+def DelSVI(tenant_name,L3out_name,NodeProf_name,LogicalInt_name,pod,node,vpc):
+	url2 = "https://{0}/api/node/mo/uni/tn-{1}/out-{2}/lnodep-{3}/lifp-{4}/rspathL3OutAtt-[topology/pod-{5}/protpaths-{6}/pathep-[{7}]].json".format(apicIP,tenant_name,L3out_name,NodeProf_name,LogicalInt_name,pod,node,vpc)
+	payload2 = '{"l3extRsPathL3OutAtt":{"attributes":{"dn":"uni/tn-%s/out-%s/lnodep-%s/lifp-%s/rspathL3OutAtt-[topology/pod-%s/protpaths-%s/pathep-[%s]]","status":"deleted"},"children":[]}}'%(tenant_name,L3out_name,NodeProf_name,LogicalInt_name,pod,node,vpc)
+	response2 = requests.request("POST", url2, data=payload2, headers=headers, verify = False)
+	return json.loads(response2.text)
+################################################################################################################################################
+
+################################################################################################################################################
+def getL3(tenant_name):
+	url2 = 'https://{0}/api/node/mo/uni/tn-{1}.json?query-target=children&target-subtree-class=l3extOut&query-target-filter=not(wcard(l3extOut.dn,%22__ui_%22))&&page=0&page-size=40'.format(apicIP,tenant_name)
+	response2 = requests.request("GET", url2, headers=headers, verify = False)
+	L3_line = json.loads(response2.text)
+	L3_name = ""
+	if int(L3_line["totalCount"]) != 0:
+		L3_name = L3_line["imdata"][0]["l3extOut"]["attributes"]["name"]
+	return L3_name
+################################################################################################################################################
+
+################################################################################################################################################
+def getNodeProf(tenant_name,L3out_name):
+	url2 = 'https://{0}/api/node/mo/uni/tn-{1}/out-{2}.json?query-target=children&target-subtree-class=l3extLNodeP&query-target-filter=not(wcard(l3extLNodeP.dn,%22__ui_%22))'.format(apicIP,tenant_name,L3out_name)
+	response2 = requests.request("GET", url2, headers=headers, verify = False)
+	NodeProf_line = json.loads(response2.text)
+	NodeProf_name = ""
+	if int(NodeProf_line["totalCount"]) != 0:
+		NodeProf_name = NodeProf_line["imdata"][0]["l3extLNodeP"]["attributes"]["name"]
+	return NodeProf_name
+################################################################################################################################################
+
+################################################################################################################################################
+def getLogicalInt(tenant_name,L3out_name,NodeProf_name):
+	url2 = 'https://{0}/api/node/mo/uni/tn-{1}/out-{2}/lnodep-{3}.json?query-target=children&target-subtree-class=l3extLIfP&query-target-filter=not(wcard(l3extLIfP.dn,%22__ui_%22))&&page=0&page-size=40'.format(apicIP,tenant_name,L3out_name,NodeProf_name)
+	response2 = requests.request("GET", url2, headers=headers, verify = False)
+	LogicalInt_line = json.loads(response2.text)
+	LogicalInt_name = ""
+	if int(LogicalInt_line["totalCount"]) != 0:
+		LogicalInt_name = LogicalInt_line["imdata"][0]["l3extLIfP"]["attributes"]["name"]
+	return LogicalInt_name
+################################################################################################################################################
 
 
 
